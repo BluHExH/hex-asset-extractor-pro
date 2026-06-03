@@ -112,7 +112,7 @@ The app supports drag-and-drop HTML uploads, Base64 asset extraction, external a
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/hex-asset-extractor-pro.git
+git clone https://github.com/BluHExH/hex-asset-extractor-pro.git
 cd hex-asset-extractor-pro
 ```
 
