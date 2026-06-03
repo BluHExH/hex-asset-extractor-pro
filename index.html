@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="HEX Asset Extractor Pro analyzes HTML files and extracts embedded Base64 and external assets with previews, reports, duplicate detection, and ZIP export." />
+  <meta name="theme-color" content="#2563eb" />
+  <title>HEX Asset Extractor Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#2563eb',
+              600: '#1d4ed8',
+              700: '#1e40af'
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="src/css/styles.css" />
+</head>
+<body class="font-sans antialiased">
+  <div class="app-shell mx-auto w-full max-w-7xl px-4 py-5 sm:px-6 lg:px-8 lg:py-8">
+    <header class="no-print mb-8 flex flex-col gap-4 rounded-3xl border border-white/70 bg-white/70 p-4 shadow-sm backdrop-blur md:flex-row md:items-center md:justify-between">
+      <a href="#" class="flex items-center gap-3" aria-label="HEX Asset Extractor Pro home">
+        <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-teal-500 text-lg font-black text-white shadow-lg shadow-blue-600/20">HEX</span>
+        <span>
+          <span class="block text-base font-extrabold tracking-tight text-slate-950">HEX Asset Extractor Pro</span>
+          <span class="block text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">HTML Asset Intelligence</span>
+        </span>
+      </a>
+      <nav class="flex flex-wrap items-center gap-2 text-sm font-semibold text-slate-600" aria-label="Primary navigation">
+        <a class="rounded-full px-3 py-2 hover:bg-white hover:text-blue-700" href="#dashboard">Dashboard</a>
+        <a class="rounded-full px-3 py-2 hover:bg-white hover:text-blue-700" href="#assets">Assets</a>
+        <a class="rounded-full px-3 py-2 hover:bg-white hover:text-blue-700" href="#report">Report</a>
+        <a class="rounded-full px-3 py-2 hover:bg-white hover:text-blue-700" href="docs/DEPLOYMENT.md">Deploy</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="relative mb-8 overflow-hidden rounded-[2rem] border border-white/70 bg-white/75 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-xl sm:p-8 lg:p-10">
+        <span class="hero-orb -right-20 -top-20"></span>
+        <div class="relative grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
+          <div>
+            <p class="mb-3 inline-flex rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.22em] text-blue-700">Commercial-grade HTML asset extraction</p>
+            <h1 class="max-w-3xl text-4xl font-black tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">Extract, inspect, and export embedded assets from HTML files.</h1>
+            <p class="mt-5 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">Analyze local HTML documents in your browser, identify Base64 images, audio, video, SVGs, external URLs, stylesheets, scripts, fonts, duplicates, and produce a polished scan report in seconds.</p>
+            <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+              <a href="#upload" class="btn-primary inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-bold">Start extraction</a>
+              <button id="loadSampleBtn" class="btn-secondary inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-bold" type="button">Load sample HTML</button>
+            </div>
+          </div>
+          <div class="glass-card rounded-[1.75rem] p-5">
+            <div class="mb-4 flex items-center justify-between">
+              <div>
+                <p class="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Live capability matrix</p>
+                <h2 class="mt-1 text-xl font-extrabold text-slate-950">Supported Asset Types</h2>
+              </div>
+              <span class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700">Client-side</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+              <span class="asset-chip image">JPEG</span>
+              <span class="asset-chip image">PNG</span>
+              <span class="asset-chip image">GIF</span>
+              <span class="asset-chip image">SVG</span>
+              <span class="asset-chip image">WebP</span>
+              <span class="asset-chip audio">Audio</span>
+              <span class="asset-chip video">Video</span>
+              <span class="asset-chip css">CSS</span>
+              <span class="asset-chip js">JS</span>
+              <span class="asset-chip font">Fonts</span>
+              <span class="asset-chip external">URLs</span>
+              <span class="asset-chip other">Reports</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="upload" class="mb-8 grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+        <div class="upload-zone glass-card rounded-[1.5rem] border-2 border-dashed border-slate-300 p-6 sm:p-8" id="dropZone" tabindex="0" role="button" aria-label="Upload HTML file">
+          <input id="fileInput" type="file" accept=".html,.htm,text/html" class="sr-only" />
+          <div class="relative flex min-h-72 flex-col items-center justify-center text-center">
+            <div class="mb-5 flex h-16 w-16 items-center justify-center rounded-3xl bg-blue-50 text-blue-700 shadow-inner">
+              <svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 16V4m0 0 4 4m-4-4-4 4M20 16.5V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h2 class="text-2xl font-black tracking-tight text-slate-950">Upload an HTML file</h2>
+            <p class="mt-3 max-w-md text-sm leading-6 text-slate-600">Drag and drop a large HTML file here, or choose a file from your device. Processing happens locally in your browser for safer handling.</p>
+            <button id="browseBtn" type="button" class="btn-primary mt-6 rounded-2xl px-5 py-3 text-sm font-bold">Choose HTML file</button>
+            <p id="uploadHint" class="mt-4 text-xs font-medium text-slate-500">Accepted formats: .html, .htm, text/html</p>
+          </div>
+        </div>
+
+        <aside class="card-strong rounded-[1.5rem] p-6 sm:p-8">
+          <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-500">Current scan</p>
+              <h2 id="currentFileName" class="mt-2 text-2xl font-black text-slate-950">No file analyzed yet</h2>
+              <p id="currentFileMeta" class="mt-2 text-sm text-slate-600">Upload an HTML file to generate extraction metrics, previews, and a downloadable report.</p>
+            </div>
+            <div id="scanStatus" class="inline-flex w-fit items-center gap-2 rounded-full bg-slate-100 px-3 py-2 text-xs font-bold text-slate-600">
+              <span class="h-2 w-2 rounded-full bg-slate-400"></span>Idle
+            </div>
+          </div>
+          <div id="progressWrap" class="mt-6 hidden">
+            <div class="mb-2 flex justify-between text-xs font-bold text-slate-500"><span>Processing</span><span id="progressText">0%</span></div>
+            <div class="h-2 overflow-hidden rounded-full bg-slate-100"><div id="progressBar" class="h-full w-0 rounded-full bg-gradient-to-r from-blue-600 to-teal-500 transition-all duration-300"></div></div>
+          </div>
+          <div class="mt-6 grid grid-cols-2 gap-3">
+            <button id="downloadImagesBtn" type="button" disabled class="btn-secondary rounded-2xl px-4 py-3 text-sm font-bold">Download Images ZIP</button>
+            <button id="downloadAllBtn" type="button" disabled class="btn-primary rounded-2xl px-4 py-3 text-sm font-bold">Download All ZIP</button>
+            <button id="printReportBtn" type="button" disabled class="btn-secondary rounded-2xl px-4 py-3 text-sm font-bold">Print Report</button>
+            <button id="clearBtn" type="button" disabled class="btn-secondary rounded-2xl px-4 py-3 text-sm font-bold">Clear Scan</button>
+          </div>
+        </aside>
+      </section>
+
+      <section id="dashboard" class="mb-8">
+        <div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-500">Asset dashboard</p>
+            <h2 class="mt-1 text-3xl font-black tracking-tight text-slate-950">Extraction overview</h2>
+          </div>
+          <p id="summaryLine" class="text-sm font-medium text-slate-500">Waiting for a file scan.</p>
+        </div>
+        <div id="metricsGrid" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        </div>
+      </section>
+
+      <section id="assets" class="mb-8 grid gap-6 xl:grid-cols-[1fr_22rem]">
+        <div class="card-strong rounded-[1.5rem] p-5 sm:p-6">
+          <div class="mb-5 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-500">Asset preview system</p>
+              <h2 class="mt-1 text-2xl font-black text-slate-950">Gallery and external inventory</h2>
+            </div>
+            <div class="flex flex-col gap-2 sm:flex-row">
+              <input id="searchInput" type="search" placeholder="Search assets..." class="focus-ring rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm" />
+              <select id="filterSelect" class="focus-ring rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm">
+                <option value="all">All assets</option>
+                <option value="image">Images</option>
+                <option value="audio">Audio</option>
+                <option value="video">Video</option>
+                <option value="css">CSS</option>
+                <option value="js">JavaScript</option>
+                <option value="font">Fonts</option>
+                <option value="external">External URLs</option>
+                <option value="duplicate">Duplicates</option>
+              </select>
+            </div>
+          </div>
+          <div id="assetGrid" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+          <div id="emptyState" class="rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
+            <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-slate-500 shadow-sm">⌁</div>
+            <h3 class="text-lg font-extrabold text-slate-900">No assets to display</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-600">Upload an HTML file or load the sample document to populate the gallery, dashboard, and report.</p>
+          </div>
+        </div>
+
+        <aside class="space-y-6">
+          <div class="card-strong rounded-[1.5rem] p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-500">Duplicate detection</p>
+            <h3 class="mt-2 text-xl font-black text-slate-950">Asset uniqueness</h3>
+            <div id="duplicateStats" class="mt-4 space-y-3 text-sm text-slate-600">
+              <p>No duplicate analysis available yet.</p>
+            </div>
+          </div>
+          <div class="card-strong rounded-[1.5rem] p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-500">File size statistics</p>
+            <h3 class="mt-2 text-xl font-black text-slate-950">Storage profile</h3>
+            <div id="sizeStats" class="mt-4 space-y-3 text-sm text-slate-600">
+              <p>No size data available yet.</p>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="report" class="mb-8">
+        <div id="reportPanel" class="card-strong report-section rounded-[1.5rem] p-6 sm:p-8">
+          <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-500">Professional scan report</p>
+              <h2 class="mt-1 text-3xl font-black tracking-tight text-slate-950">Extraction results</h2>
+              <p id="reportSubtitle" class="mt-2 text-sm text-slate-600">A report will be generated after your first scan.</p>
+            </div>
+            <span class="rounded-full bg-blue-50 px-3 py-2 text-xs font-bold text-blue-700">HEX Report</span>
+          </div>
+          <div id="reportContent" class="grid gap-4 md:grid-cols-2"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="no-print pb-6 text-center text-sm text-slate-500">
+      <p>Built for professional portfolio showcases, GitHub Pages, Netlify, and Vercel deployments.</p>
+    </footer>
+    <noscript class="no-print">
+      <div class="mx-auto max-w-7xl px-4 py-4 text-center text-sm text-red-700">JavaScript is required for HEX Asset Extractor Pro to function. Please enable JavaScript in your browser.</div>
+    </noscript>
+  </div>
+
+  <div id="assetModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="max-h-[90vh] w-full max-w-3xl overflow-hidden rounded-[1.5rem] bg-white shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-200 p-5">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-500">Asset detail</p>
+          <h3 id="modalTitle" class="mt-1 text-xl font-black text-slate-950">Asset preview</h3>
+        </div>
+        <button id="closeModalBtn" type="button" class="rounded-full bg-slate-100 px-3 py-2 text-sm font-bold text-slate-700 hover:bg-slate-200">Close</button>
+      </div>
+      <div id="modalBody" class="max-h-[72vh] overflow-y-auto p-5"></div>
+    </div>
+  </div>
+
+  <div id="toastContainer" role="status" aria-live="polite" class="fixed bottom-4 right-4 z-[60] flex w-[calc(100%-2rem)] max-w-sm flex-col gap-3"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL50H0GgOHvegtg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script type="module" src="src/js/app.js"></script>
+</body>
+</html>
