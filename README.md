@@ -1,5 +1,14 @@
 <p align="center">
-  <img src="assets/banner.svg" alt="HEX Asset Extractor Pro" width="100%">
+  <img src="assets/logo.svg" alt="HEX Asset Extractor Pro" width="160" />
+</p>
+
+<h1 align="center">HEX Asset Extractor Pro</h1>
+
+<h3 align="center">Commercial-grade HTML Asset Intelligence</h3>
+
+<p align="center">
+  Extract • Inspect • Export embedded & external assets from HTML files<br/>
+  <b>100% Client-Side • Free Forever</b>
 </p>
 
 <p align="center">
@@ -12,8 +21,6 @@
 </p>
 
 ---
-
-### Commercial-grade HTML Asset Intelligence
 
 **HEX Asset Extractor Pro** is a modern, responsive, browser-based web application that extracts Base64 and external assets from HTML files. Built as a clean SaaS-style dashboard — runs 100% client-side.
 
